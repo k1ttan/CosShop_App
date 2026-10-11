@@ -23,6 +23,7 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
+  const [needsConfirmation, setNeedsConfirmation] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +59,12 @@ export default function RegisterPage() {
 
       if (!res.success) {
         setError(res.error || 'Đăng ký không thành công. Vui lòng thử lại.')
+        setLoading(false)
+        return
+      }
+
+      if (res.needsEmailConfirmation) {
+        setNeedsConfirmation(true)
         setLoading(false)
         return
       }
@@ -122,6 +129,26 @@ export default function RegisterPage() {
             </div>
           )}
 
+          {needsConfirmation && (
+            <div className="mb-6 p-5 rounded bg-purple-50 dark:bg-purple-950/40 border-2 border-purple-300 dark:border-purple-800 text-purple-900 dark:text-purple-200 text-xs font-semibold">
+              <div className="flex items-center gap-2 font-black text-sm mb-2 text-purple-800 dark:text-purple-300">
+                <span>📧 Kiểm tra email để kích hoạt tài khoản!</span>
+              </div>
+              <p className="leading-relaxed text-zinc-700 dark:text-zinc-300">
+                Hệ thống đã gửi một liên kết xác thực đến <strong>{formData.email}</strong>. Vui lòng bấm vào liên kết trong hộp thư (bao gồm cả thư mục Spam) để hoàn tất kích hoạt tài khoản.
+              </p>
+              <div className="mt-4 flex gap-2">
+                <Link
+                  href="/login"
+                  className="px-4 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-sm transition-colors"
+                >
+                  Đến trang Đăng nhập
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {!needsConfirmation && (
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label
@@ -283,6 +310,7 @@ export default function RegisterPage() {
               </button>
             </div>
           </form>
+          )}
 
           <div className="mt-6 pt-6 border-t border-zinc-200 dark:border-zinc-800 text-center">
             <Link

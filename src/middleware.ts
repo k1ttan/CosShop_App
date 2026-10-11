@@ -50,6 +50,19 @@ export async function middleware(request: NextRequest) {
   const adminPaths = ['/dashboard', '/admin']
   const pathname = request.nextUrl.pathname
 
+  // Tự động chuyển tiếp mã xác thực email PKCE về route handler callback
+  if (
+    request.nextUrl.searchParams.has('code') &&
+    !pathname.startsWith('/auth/callback') &&
+    !pathname.startsWith('/api')
+  ) {
+    const callbackUrl = new URL('/auth/callback', request.url)
+    request.nextUrl.searchParams.forEach((val, key) => {
+      callbackUrl.searchParams.set(key, val)
+    })
+    return NextResponse.redirect(callbackUrl)
+  }
+
   if (!user && protectedPaths.some((path) => pathname.startsWith(path))) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'

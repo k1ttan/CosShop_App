@@ -58,13 +58,15 @@ export async function signUp(formData: {
   full_name: string
   phone: string
   default_address?: string
-}): Promise<{ success: boolean; error?: string }> {
+}): Promise<{ success: boolean; error?: string; needsEmailConfirmation?: boolean }> {
   const supabase = await createClient()
 
   const strength = evaluatePasswordStrength(formData.password || '')
   if (!strength.isValid) {
     return { success: false, error: strength.errorMessage || 'Mật khẩu chưa đáp ứng tiêu chuẩn an toàn' }
   }
+
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
   const { data, error } = await supabase.auth.signUp({
     email: formData.email,
@@ -75,6 +77,7 @@ export async function signUp(formData: {
         phone: formData.phone,
         default_address: formData.default_address || null,
       },
+      emailRedirectTo: `${appUrl}/auth/callback?next=/login?confirmed=true`,
     },
   })
 
@@ -93,7 +96,8 @@ export async function signUp(formData: {
     .eq('id', data.user.id)
 
   revalidatePath('/', 'layout')
-  return { success: true }
+  const needsEmailConfirmation = !data.session
+  return { success: true, needsEmailConfirmation }
 }
 
 export async function signOut(): Promise<{ success: boolean }> {

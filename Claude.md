@@ -552,11 +552,19 @@ Khi Import dự án vào Vercel Dashboard, cấu hình các biến sau tại m�
 
 ### 10.3. Checklist Cấu hình Supabase Cloud trước khi Go-Live Test
 1. **Auth URL Configuration (Supabase Dashboard → Authentication → URL Configuration):**
-   - **Site URL:** Điền `https://<ten-project>.vercel.app`
-   - **Redirect URLs:** Thêm `https://<ten-project>.vercel.app/**` và `http://localhost:3000/**`
-2. **Database Realtime Replication (Supabase Dashboard → Database → Publications):**
+   - **Site URL:** Điền `http://localhost:3000` (ở local) hoặc `https://<ten-project>.vercel.app` (khi lên Vercel).
+   - **Redirect URLs:** Thêm đầy đủ 4 link sau để cơ chế PKCE exchange token hoạt động chuẩn xác:
+     - `http://localhost:3000/**`
+     - `http://localhost:3000/auth/callback`
+     - `https://<ten-project>.vercel.app/**`
+     - `https://<ten-project>.vercel.app/auth/callback`
+2. **Cấu hình Xác thực Email (Authentication → Providers → Email):**
+   - **Confirm email (Bật/Tắt):**
+     - **Nếu BẬT (Mặc định):** Link xác thực trong email sẽ tự động đưa người dùng qua route `/auth/callback` để kích hoạt tài khoản và chuyển hướng về `/login?confirmed=true`.
+     - **Nếu TẮT (Khuyên dùng khi Test nội bộ):** Người dùng đăng ký xong là tài khoản được kích hoạt ngay lập tức mà không cần kiểm tra hộp thư email.
+3. **Database Realtime Replication (Supabase Dashboard → Database → Publications):**
    - Đảm bảo ấn bật Replication cho 3 bảng: `chat_messages`, `conversations`, `notifications`.
-3. **Storage Buckets (Supabase Dashboard → Storage):**
+4. **Storage Buckets (Supabase Dashboard → Storage):**
    - Bucket `avatars` (Public).
    - Bucket `booking-proofs` (Public).
    - Bucket `chat-attachments` (Public).

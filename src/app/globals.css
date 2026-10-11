@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #fff5f7;
+  --foreground: #2d1822;
+  --card-bg: #ffffff;
+  --card-border: #fed7e2;
+  --accent-pink: #f43f5e;
+  --accent-soft: #fce7f3;
+}
+
+.dark {
+  --background: #141118;
+  --foreground: #fdf2f8;
+  --card-bg: #1f1a24;
+  --card-border: #382c40;
+  --accent-pink: #fb7185;
+  --accent-soft: #2e1d2c;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-vietnamese-sans), sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar,
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar,
+  .scrollbar-none {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  /* Custom stylish scrollbar for modals & popups matching Sakura / Dark mode */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #f472b6;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ec4899;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: #831843;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #be185d;
+  }
+
+  /* Firefox scrollbar styling */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #f472b6 transparent;
+  }
+  .dark * {
+    scrollbar-color: #831843 transparent;
+  }
+}
+

@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.agents
+.agent
+.claude
+.vscode
+.idea
+*.log
+.env*.local
+README.md
+PRD.md
+IMPLEMENTATION_PLAN.md
+Claude.md
+GEMINI.md
+temp_vibecodekit

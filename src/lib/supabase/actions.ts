@@ -5,6 +5,7 @@
  * Được gọi từ Client Components qua form actions hoặc event handlers
  */
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { checkBookingOverlap, checkUserActiveBookingLimit, checkKycStatus } from '@/lib/utils/booking-logic'
 import type { CreateBookingPayload, Notification, BookingWithDetails } from '@/types/database'
 import { evaluatePasswordStrength } from '@/lib/validations/password'
@@ -200,8 +201,10 @@ export async function createBooking(
   const depositFee = costume.deposit_price
   const totalAmount = totalRentFee + depositFee + payload.shippingFee
 
-  // Tạo booking
-  const { data: booking, error: insertError } = await supabase
+  // Tạo booking (dùng Admin Client nếu là khách vãng lai để tránh xung đột RLS ở tầng database)
+  const dbClient = isGuest ? createAdminClient() : supabase
+
+  const { data: booking, error: insertError } = await dbClient
     .from('bookings')
     .insert({
       user_id: user ? user.id : null,

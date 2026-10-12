@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useMemo, useState, useEffect } from 'react'
-import Image from 'next/image'
+import { SmartImage } from '@/components/ui/SmartImage'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCartStore } from '@/store/useCartStore'
@@ -329,8 +329,8 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 return (
                   <div key={item.costume.id} className="py-3 flex gap-3 items-start bg-rose-50/40 dark:bg-pink-950/20 my-1.5 p-3 rounded-2xl border border-rose-200/60 dark:border-pink-900/40">
                     <div className="relative w-16 h-20 rounded-xl overflow-hidden shrink-0 border-2 border-rose-200 dark:border-pink-900/60 bg-zinc-950">
-                      <Image
-                        src={item.costume.image_urls[0] || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800'}
+                      <SmartImage
+                        src={item.costume.image_urls[0]}
                         alt={item.costume.name}
                         fill
                         className="object-cover"

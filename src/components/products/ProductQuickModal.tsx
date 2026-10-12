@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import Image from 'next/image'
+import { SmartImage } from '@/components/ui/SmartImage'
 import Link from 'next/link'
 import { Costume } from '@/types/database'
 import { formatVND } from '@/lib/utils/helpers'
@@ -43,7 +43,7 @@ export function ProductQuickModal({ costume, onClose }: ProductQuickModalProps) 
 
         {/* Khung ảnh gọn gàng + Mini thumb nếu có nhiều ảnh */}
         <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-rose-50 dark:bg-zinc-900 border border-rose-200/60 dark:border-pink-900/40">
-          <Image
+          <SmartImage
             src={images[activeImgIndex] || images[0]}
             alt={costume.name}
             fill

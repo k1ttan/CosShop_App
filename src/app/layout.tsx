@@ -15,8 +15,13 @@ const elegantSerif = Playfair_Display({
   display: "swap",
 });
 
+import dynamic from "next/dynamic";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import { FloatingChatWidget } from "@/components/chat/FloatingChatWidget";
+
+const FloatingChatWidget = dynamic(
+  () => import("@/components/chat/FloatingChatWidget").then((mod) => mod.FloatingChatWidget),
+  { ssr: false }
+);
 
 export const metadata: Metadata = {
   title: "CosRent | Thuê trang phục cosplay",

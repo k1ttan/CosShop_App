@@ -600,3 +600,21 @@ git push -u origin main
 2. Cập nhật lại biến `NEXT_PUBLIC_APP_URL` trên Vercel thành link live vừa nhận được → Bấm **Redeploy**.
 3. Thêm link live vào **Redirect URLs** trên Supabase Dashboard.
 4. Chạy toàn bộ 15 testcase trong [`TEST_PLAN.md`](file:///d:/Work/Cos-app/TEST_PLAN.md) trên link live thực tế.
+
+---
+
+## 11. CẤU HÌNH AGENT SKILLS (MATT POCOCK SKILLS)
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live in GitHub Issues (`https://github.com/k1ttan/CosShop_App`). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Canonical 5-role triage label vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context layout (`Claude.md` as primary source of truth + `docs/adr/`). See `docs/agents/domain.md`.

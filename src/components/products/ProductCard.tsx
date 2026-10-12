@@ -1,7 +1,7 @@
 'use client'
 
 import React, { memo } from 'react'
-import Image from 'next/image'
+import { SmartImage } from '@/components/ui/SmartImage'
 import type { Costume } from '@/types/database'
 import { formatVND } from '@/lib/utils/helpers'
 
@@ -21,8 +21,8 @@ export const ProductCard = memo(function ProductCard({ costume, onSelect }: Prod
       <div>
         {/* Costume Image with Tags */}
         <div className="relative aspect-[3/4] w-full overflow-hidden bg-rose-50 dark:bg-zinc-900">
-          <Image
-            src={costume.image_urls[0] || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800'}
+          <SmartImage
+            src={costume.image_urls[0]}
             alt={costume.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
